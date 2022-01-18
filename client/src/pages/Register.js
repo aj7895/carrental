@@ -6,6 +6,9 @@ import { userRegister } from "../redux/actions/userAction";
 const Register = () => {
   const [values, setValues] = useState({
     username: "",
+    name: "",
+    email: "",
+    image: "",
     password: "",
     confirmpassword: "",
   });
@@ -25,7 +28,7 @@ const Register = () => {
   };
   return (
     <div>
-      <div className="flex mx-auto my-32 flex-col w-[740px] px-4 py-8 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
+      <div className="flex mx-auto my-32 flex-col w-[740px] px-4 py-8 rounded-lg shadow bg-gray-100 sm:px-6 md:px-8 lg:px-10">
         <div className="mx-auto text-3xl font-semibold">
           Create a new account
         </div>
@@ -49,6 +52,54 @@ const Register = () => {
                   className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
                   name="username"
                   placeholder="username"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col mb-2">
+              <div className=" relative ">
+                <input
+                  type="text"
+                  value={values.name}
+                  onChange={handleInputs}
+                  className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                  name="name"
+                  placeholder="name"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col mb-2">
+              <div className=" relative ">
+                <input
+                  type="text"
+                  value={values.email}
+                  onChange={handleInputs}
+                  className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                  name="email"
+                  placeholder="email"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col mb-2">
+              <div className=" relative ">
+                <input
+                  type="text"
+                  value={values.country}
+                  onChange={handleInputs}
+                  className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                  name="country"
+                  placeholder="country"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col mb-2">
+              <div className=" relative ">
+                <input
+                  type="text"
+                  value={values.image}
+                  onChange={handleInputs}
+                  className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                  name="image"
+                  placeholder="image url"
                 />
               </div>
             </div>

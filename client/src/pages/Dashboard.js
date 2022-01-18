@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProgressBar from "@badrap/bar-of-progress";
-import { Popconfirm, message } from "antd";
 import { Link } from "react-router-dom";
 import { getCars } from "../redux/actions/carsActions";
 import { getUsers } from "../redux/actions/userAction";
-import { deleteCar } from "../redux/actions/carsActions";
+import { navData } from "../constant/data";
 
-import EditUser from "../components/EditUser.js";
+// components
+import Users from "../components/Users.js";
+import Cars from "../components/Cars.js";
 
 // progress bar
 const progress = new ProgressBar({
@@ -18,11 +19,13 @@ const progress = new ProgressBar({
 });
 
 const Dashboard = () => {
+  console.log(navData);
   const { cars } = useSelector((state) => state.carsReducer);
   const { loading } = useSelector((state) => state.alertsReducer);
   const { users } = useSelector((state) => state.usersReducer);
   const dispatch = useDispatch();
   const [totalCars, setTotalcars] = useState([]);
+  const [navTo, setNavTo] = useState(0);
 
   useEffect(() => {
     dispatch(getCars());
@@ -37,56 +40,45 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex gap-7 my-7">
-        {users.map((user) => (
-          <EditUser user={user} />
-        ))}
+      <div className="-mt-20 h-[327px] w-screen">
+        <img className="w-full h-full object-cover" src="/admin.svg"></img>
+      </div>
+      <div class="mb-14 mt-2 border-b border-gray-200 shadow-sm">
+        <ul class="flex flex-wrap w-[790px] mx-auto -mb-px">
+          {navData.map((data) => (
+            <li class="mr-2">
+              <button
+                onClick={() => {
+                  {
+                    data.id === 1
+                      ? setNavTo(1)
+                      : data.id === 2
+                      ? setNavTo(2)
+                      : data.id === 3
+                      ? setNavTo(3)
+                      : setNavTo(0);
+                  }
+                }}
+                class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300"
+              >
+                {data.name}
+              </button>
+            </li>
+          ))}
+          <Link
+            className="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300"
+            to="/addcar"
+          >
+            Add new car
+          </Link>
+        </ul>
       </div>
 
-      <div className="my-7 ml-24">
-        <Link
-          className="border-red-400 text-lg text-gray-700 font-medium px-4 py-1 border-2 rounded"
-          to="/addcar"
-        >
-          Add new car
-        </Link>
-      </div>
+      {navTo === 1 && <Users user={users} />}
+      {navTo === 2 && <Cars cars={totalCars} />}
+
       <div className="flex flex-wrap gap-20 justify-center my-20">
         {loading == true ? progress.start() : progress.finish()}
-        {totalCars.map((car) => (
-          <div className=" w-[370px] h-[300px] bg-gray-50 shadow-sm hover:-translate-y-2 duration-300 transition rounded overflow-hidden">
-            <img
-              className=" object-cover w-full h-[70%]"
-              src={car.image}
-              alt=""
-            />
-            <div className="flex flex-col pt-1">
-              <p className="tracking-wide text-md px-7 font-semibold">
-                {car.name}
-              </p>
-              <div className="flex w-full justify-between px-14 py-1 items-center">
-                <Link
-                  className="border-red-400 text-gray-700 font-medium px-5 py-1 border-2 rounded"
-                  to={`/editcar/${car._id}`}
-                >
-                  Edit
-                </Link>
-                <Popconfirm
-                  title="Are you sure to delete this Car?"
-                  onConfirm={() => {
-                    dispatch(deleteCar({ carid: car._id }));
-                  }}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <a className="border-red-400 text-gray-700 font-medium px-4 py-1 border-2 rounded">
-                    Delete
-                  </a>
-                </Popconfirm>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
     </>
   );

@@ -30,3 +30,10 @@
   outline: none !important;
   border: none !important;
 }
+
+.ant-picker {
+  width: 570px !important;
+  padding: 11px !important;
+  border-radius: 5px !important;
+  border: 2px solid rgb(248 113 113) !important;
+}
